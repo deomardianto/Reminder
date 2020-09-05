@@ -11,18 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".literasi.ArtikelDetailActivity"></activity>
-        <activity android:name=".impian.AddImpianActivity" />
-        <activity android:name=".jadwal.AddJadwalActivity" />
-        <activity android:name=".verify.SignUpActivity" />
-        <activity android:name=".verify.LoginActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".literasi.ArtikelDetailActivity" />
+        <activity android:name=".impian.AddImpianActivity" />
+        <activity android:name=".jadwal.AddJadwalActivity" />
+        <activity android:name=".verify.SignUpActivity" />
+        <activity android:name=".verify.LoginActivity" />
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

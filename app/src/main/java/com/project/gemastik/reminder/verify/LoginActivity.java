@@ -3,6 +3,7 @@ package com.project.gemastik.reminder.verify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     FloatingActionButton login;
     TextView signin;
     FirebaseAuth mAuth;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser mUser = firebaseAuth.getCurrentUser();
-
-            if (mUser != null){
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
-    };
-
     private void loginUser(){
         String txmail, txpass;
 
@@ -82,25 +71,28 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        pd = new ProgressDialog(this);
+        pd.setTitle("Proses Login");
+        pd.setCancelable(false);
+
+        pd.show();
         mAuth.signInWithEmailAndPassword(txmail, txpass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            pd.dismiss();
                             Toast.makeText(getApplicationContext(),"Login sukses!",Toast.LENGTH_SHORT).show();
 
                             Intent intens = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intens);
+                            finish();
                         } else {
+                            pd.dismiss();
                             Toast.makeText(getApplicationContext(),"Login gagal, silakan coba lagi",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(authStateListener);
-    }
 }

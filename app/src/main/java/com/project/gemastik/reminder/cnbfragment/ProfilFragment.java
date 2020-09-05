@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.project.gemastik.reminder.MainActivity;
 import com.project.gemastik.reminder.R;
 import com.project.gemastik.reminder.verify.LoginActivity;
 
@@ -49,10 +50,27 @@ public class ProfilFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
             }
         });
         return view;
     }
+
+//    public void checkStatus(){
+//
+//        if (mUser != null){
+//
+//        }else {
+//            startActivity(new Intent(getActivity(), LoginActivity.class));
+//            getActivity().finish();
+//        }
+//    }
+//
+//
+//    @Override
+//    public void onStart() {
+//        checkStatus();
+//        super.onStart();
+//    }
 }
