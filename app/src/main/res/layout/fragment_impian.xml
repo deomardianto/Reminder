@@ -30,7 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bagaimana_cara_mendesain_suatu_impian"
-            android:textSize="17sp"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
             android:textColor="#000000"
             android:fontFamily="@font/poppins_medium"/>
     </androidx.cardview.widget.CardView>
@@ -42,7 +43,8 @@
         android:layout_below="@id/ask_goals"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp"
-        android:layout_marginEnd="20dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:focusable="true"
         style="@style/MarginForm">
 
         <LinearLayout
@@ -56,10 +58,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_goals_active"
-                android:paddingEnd="5dp"
+                android:layout_marginEnd="5dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                tools:ignore="RtlSymmetry" />
+                android:paddingBottom="8dp" />
             <TextView
                 android:id="@+id/tx_aktif"
                 android:layout_width="wrap_content"
@@ -77,10 +78,13 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ask_goals"
-        android:layout_toEndOf="@id/active_goals"
+        android:layout_alignParentEnd="true"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp"
-        style="@style/MarginForm">
+        android:foreground="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,10 +97,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_goals_complete"
-                android:paddingEnd="5dp"
+                android:layout_marginEnd="5dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                tools:ignore="RtlSymmetry" />
+                android:paddingBottom="8dp" />
             <TextView
                 android:id="@+id/tx_capai"
                 android:layout_width="wrap_content"

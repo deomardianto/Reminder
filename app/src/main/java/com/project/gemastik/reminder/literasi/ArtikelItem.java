@@ -1,6 +1,9 @@
 package com.project.gemastik.reminder.literasi;
 
-public class ArtikelItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ArtikelItem implements Parcelable {
 
     private int posterEbook;
     private String namaEbook;
@@ -9,6 +12,28 @@ public class ArtikelItem {
     private String jmlHal;
     private String titleEbook;
     private String deskEbook;
+
+    protected ArtikelItem(Parcel in) {
+        posterEbook = in.readInt();
+        namaEbook = in.readString();
+        pengarang = in.readString();
+        kategori = in.readString();
+        jmlHal = in.readString();
+        titleEbook = in.readString();
+        deskEbook = in.readString();
+    }
+
+    public static final Creator<ArtikelItem> CREATOR = new Creator<ArtikelItem>() {
+        @Override
+        public ArtikelItem createFromParcel(Parcel in) {
+            return new ArtikelItem(in);
+        }
+
+        @Override
+        public ArtikelItem[] newArray(int size) {
+            return new ArtikelItem[size];
+        }
+    };
 
     public int getPosterEbook() {
         return posterEbook;
@@ -65,5 +90,22 @@ public class ArtikelItem {
         this.kategori = kategori;
         this.jmlHal = jmlHal;
         this.deskEbook = deskEbook;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeInt(posterEbook);
+        parcel.writeString(namaEbook);
+        parcel.writeString(pengarang);
+        parcel.writeString(kategori);
+        parcel.writeString(jmlHal);
+        parcel.writeString(titleEbook);
+        parcel.writeString(deskEbook);
     }
 }

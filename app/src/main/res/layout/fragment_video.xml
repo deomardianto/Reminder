@@ -26,4 +26,18 @@
         style="@style/MarginFormEdittext"
         android:entries="@array/kat_artikel"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/video_populer"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="#000000"
+        style="@style/MarginForm"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/video_item"/>
 </LinearLayout>

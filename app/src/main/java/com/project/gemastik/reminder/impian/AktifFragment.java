@@ -21,7 +21,6 @@ import java.util.List;
 public class AktifFragment extends Fragment {
 
     List<ImpianItem> items = new ArrayList<>();
-
     public AktifFragment() {
         // Required empty public constructor
     }
@@ -35,8 +34,8 @@ public class AktifFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_impian_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        ImpianAdapter impianAdapter = new ImpianAdapter(items);
-        recyclerView.setAdapter(impianAdapter);
+        ImpianAdapter adapter = new ImpianAdapter(items);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         return view;
     }

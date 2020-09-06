@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/close_habits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_black_24dp"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent" />
 
     <EditText
         android:id="@+id/edt_habits"
@@ -10,22 +19,11 @@
         android:hint="@string/nama_impian"
         android:inputType="text"
         android:padding="8dp"
-        android:layout_toStartOf="@id/close_habits"
         android:cursorVisible="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
         android:textSize="17sp"
         android:fontFamily="@font/poppins_regular"/>
 
-    <ImageButton
-        android:id="@+id/close_habits"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_close_black_24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_alignParentEnd="true"
-        android:background="@android:color/transparent" />
-
-</RelativeLayout>
+</LinearLayout>

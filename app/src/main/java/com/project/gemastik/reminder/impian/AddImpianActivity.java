@@ -35,8 +35,8 @@ public class AddImpianActivity extends AppCompatActivity {
     private void addListHabits(){
         final View habitsView = getLayoutInflater().inflate(R.layout.add_layout_habits,null,false);
 
-        EditText editText = findViewById(R.id.edt_habits);
-        ImageButton imageButton = findViewById(R.id.close_habits);
+        EditText editText = habitsView.findViewById(R.id.edt_habits);
+        ImageButton imageButton = habitsView.findViewById(R.id.close_habits);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override

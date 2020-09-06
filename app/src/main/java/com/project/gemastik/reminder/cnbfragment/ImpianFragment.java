@@ -33,7 +33,6 @@ public class ImpianFragment extends Fragment {
     CardView btn_aktif, btn_capai;
     ImageView imgAktif, imgCapai;
     TextView txAktif, txCapai;
-
     public ImpianFragment() {
         // Required empty public constructor
     }
@@ -44,8 +43,6 @@ public class ImpianFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewFrag = inflater.inflate(R.layout.fragment_impian, container, false);
-
-        fragAktif();
 
         FloatingActionButton fab = viewFrag.findViewById(R.id.fabAddImpian);
         btn_aktif = viewFrag.findViewById(R.id.active_goals);
@@ -74,11 +71,11 @@ public class ImpianFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        fragAktif();
         return viewFrag;
     }
 
     private void fragAktif(){
-        btn_aktif.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
         imgAktif.setImageResource(R.drawable.ic_goals_active_check);
         txAktif.setTextColor(Color.WHITE);
 
@@ -88,7 +85,6 @@ public class ImpianFragment extends Fragment {
     }
 
     private void fragCapai(){
-        btn_capai.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
         imgCapai.setImageResource(R.drawable.ic_goals_complete_check);
         txCapai.setTextColor(Color.WHITE);
 

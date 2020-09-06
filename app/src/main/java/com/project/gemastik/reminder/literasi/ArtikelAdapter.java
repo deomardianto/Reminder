@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.project.gemastik.reminder.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ArtikelHolder> {
 
-    private static final String TAG = "ArtikelAdapter";
-    List<ArtikelItem> artikelItemList;
+    private ArrayList<ArtikelItem> artikelItems;
+    private Context context;
 
+    public ArrayList<ArtikelItem> getArtikelItems() {
+        return artikelItems;
+    }
 
-    public ArtikelAdapter(List<ArtikelItem> artikelItemList) {
-        this.artikelItemList = artikelItemList;
+    public void setArtikelItems(ArrayList<ArtikelItem> artikelItems) {
+        this.artikelItems = artikelItems;
+    }
+
+    public ArtikelAdapter(Context context) {
+        this.context = context;
     }
 
     @NonNull
@@ -36,7 +45,7 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ArtikelH
 
     @Override
     public void onBindViewHolder(@NonNull ArtikelAdapter.ArtikelHolder holder, int position) {
-        ArtikelItem artikelItem = artikelItemList.get(position);
+        ArtikelItem artikelItem = artikelItems.get(position);
         holder.title.setText(artikelItem.getNamaEbook());
         holder.kategori.setText(artikelItem.getKategori());
         Glide.with(holder.itemView.getContext())
@@ -46,11 +55,10 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ArtikelH
 
     @Override
     public int getItemCount() {
-        return artikelItemList.size();
+        return artikelItems.size();
     }
 
-    public class ArtikelHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "ArtikelHolder";
+    public class ArtikelHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView title, kategori;
 
@@ -61,14 +69,19 @@ public class ArtikelAdapter extends RecyclerView.Adapter<ArtikelAdapter.ArtikelH
             kategori = itemView.findViewById(R.id.kat_ebook);
             imageView = itemView.findViewById(R.id.poster_ebook);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context,ArtikelDetailActivity.class);
-                    context.startActivity(intent);
-                }
-            });
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            ArtikelItem artikelItem = getArtikelItems().get(position);
+
+            artikelItem.setNamaEbook(artikelItem.getNamaEbook());
+
+            Intent moveObject = new Intent(itemView.getContext(), ArtikelDetailActivity.class);
+            moveObject.putExtra(ArtikelDetailActivity.EXTRA_ARTIKEL,artikelItem);
+            context.startActivity(moveObject);
         }
     }
 }

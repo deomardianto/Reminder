@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
-        android:layout_marginEnd="20dp"
-        android:elevation="12dp">
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        app:cardElevation="7dp">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -34,7 +35,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:fontFamily="@font/poppins_medium"/>
 
          <TextView
@@ -42,7 +43,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="@string/ichwan_sholihin"
-             android:textSize="17sp"
+             android:textSize="14sp"
              android:textColor="#000000"
              android:fontFamily="@font/poppins_medium"
              android:layout_below="@id/txpengarang"
@@ -56,9 +57,9 @@
                 android:text="@string/jumlah_halaman_24"
                 android:layout_toEndOf="@id/img_cover"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:layout_below="@id/pengarang"
                 android:fontFamily="@font/poppins_medium"/>
 
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_24_halaman"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/poppins_medium"
                 android:layout_below="@id/txjml"
@@ -81,9 +82,9 @@
                 android:text="@string/kategori"
                 android:layout_toEndOf="@id/img_cover"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:layout_below="@id/jumlah_hal"
                 android:fontFamily="@font/poppins_medium"/>
 
@@ -92,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/motivasi_belajar"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/poppins_medium"
                 android:layout_below="@id/txkat"
@@ -103,39 +104,34 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_ebook"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/cv_info"
         android:layout_margin="20dp"
+        app:cardElevation="7dp"
         app:cardCornerRadius="25dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_gravity="center_vertical">
-        <ImageButton
-            android:id="@+id/save_ebook"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_bookmark_unsave"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <ImageButton
+                android:id="@+id/save_ebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bookmark_unsave"
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:id="@+id/txsimpan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/simpan"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#000000"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/poppins_regular"
-                app:layout_constraintStart_toEndOf="@id/save_ebook"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:fontFamily="@font/poppins_regular" />
 
             <ImageButton
                 android:id="@+id/share_ebook"
@@ -152,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bagikan"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/poppins_regular"
                 app:layout_constraintStart_toEndOf="@id/share_ebook"
@@ -172,12 +168,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unduh"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/poppins_regular"
                 app:layout_constraintStart_toEndOf="@id/unduh_ebook"
                 app:layout_constraintTop_toTopOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <ScrollView
@@ -189,7 +187,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
         app:cardCornerRadius="12dp"
-        android:elevation="15dp">
+        app:cardElevation="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -202,9 +200,9 @@
             android:layout_height="wrap_content"
             android:text="@string/hello_blank_fragment"
             android:layout_margin="5dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#000000"
-            android:fontFamily="@font/poppins_regular"/>
+            android:fontFamily="@font/poppins_medium"/>
 
         <TextView
             android:id="@+id/desk_ebook"
