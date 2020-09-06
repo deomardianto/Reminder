@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -72,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
     public void checkStatus(){
 
         FirebaseUser User = firebaseAuth.getCurrentUser();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (User != null){
 
-        }else {
+        }else if(account != null){
+
+        }else{
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }

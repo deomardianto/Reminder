@@ -110,22 +110,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/MarginFormEdittext"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="#fff"
         app:cardCornerRadius="12dp"
         android:foreground="?attr/selectableItemBackground"
         android:focusable="true"
         android:layout_marginBottom="15dp"
         android:layout_below="@id/btnsignup">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/daftar_dengan_google"
-            android:textSize="18sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="8dp"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/poppins_medium"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/google"
+                android:layout_gravity="center"
+                android:layout_marginRight="130dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/daftar_dengan_google"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:textColor="#000"
+                android:fontFamily="@font/poppins_medium"/>
     </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
