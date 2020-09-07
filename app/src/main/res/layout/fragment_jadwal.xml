@@ -51,7 +51,7 @@
                 android:layout_height="match_parent">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tx_agenda"
@@ -66,9 +66,11 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_agenda"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@id/tx_agenda"
-                        tools:listitem="@layout/agenda_item"/>
+                        tools:listitem="@layout/agenda_item"
+                        android:layout_marginTop="-20dp"
+                        android:paddingBottom="30dp"/>
 
                 </RelativeLayout>
             </ScrollView>

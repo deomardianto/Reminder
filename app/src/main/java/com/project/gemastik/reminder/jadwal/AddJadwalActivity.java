@@ -1,21 +1,46 @@
 package com.project.gemastik.reminder.jadwal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.project.gemastik.reminder.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -24,7 +49,21 @@ public class AddJadwalActivity extends AppCompatActivity {
     EditText nama_agenda;
     ImageButton btn_time;
     TextView tx_time;
+    CardView btn_simpan;
+    String tipe, personEmail;
+    ProgressDialog progressDialog;
     SwitchDateTimeDialogFragment dateTimeDialogFragment;
+
+    List<dataAgenda> list;
+    adapterAgenda adapter;
+
+    private FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    private DatabaseReference reference;
+    GoogleSignInClient mGoogleSignInClient;
+
+    RadioGroup radioGroup;
+    RadioButton alarm, notif;
 
     private static final String TAG_DATETIME = "TAG_DATETIME";
     private static final String TAG = "DateTimePicker";
@@ -33,8 +72,18 @@ public class AddJadwalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_jadwal);
 
+        nama_agenda = findViewById(R.id.judul_agenda);
         tx_time = findViewById(R.id.mulai_agenda);
         btn_time = findViewById(R.id.btn_mulai_agenda);
+        final Spinner ulangi = findViewById(R.id.spin_agenda);
+        btn_simpan = findViewById(R.id.btnsimpan_agenda);
+
+        radioGroup = findViewById(R.id.radiogrup_agenda);
+        alarm = findViewById(R.id.alarm_agenda);
+        notif = findViewById(R.id.notif_agenda);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         dateTimePicker();
 
@@ -45,7 +94,50 @@ public class AddJadwalActivity extends AppCompatActivity {
                 dateTimeDialogFragment.show(getSupportFragmentManager(),TAG_DATETIME);
             }
         });
+
+        btn_simpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AddJadwalActivity.this);
+                if (acct != null) {
+                    personEmail = acct.getEmail();
+
+                }else {
+                    personEmail = mUser.getEmail();
+                }
+
+                tipePengingat();
+
+                String judul = nama_agenda.getText().toString().trim();
+                String waktu = tx_time.getText().toString().trim();
+                String Ulangi =ulangi.getSelectedItem().toString();
+                String timeStamp = String.valueOf(System.currentTimeMillis());
+
+                HashMap<Object, String> hashMap = new HashMap<>();
+                hashMap.put("email",personEmail);
+                hashMap.put("judul", judul);
+                hashMap.put("waktu", waktu);
+                hashMap.put("tipe", tipe);
+                hashMap.put("ulangi",Ulangi);
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = database.getReference("Agenda");
+
+                databaseReference.child(timeStamp).setValue(hashMap);
+                Toast.makeText(AddJadwalActivity.this, "Berhasil Agenda Disimpan", Toast.LENGTH_LONG).show();
+                finish();
+
+            }
+        });
   }
+
+    private void tipePengingat() {
+        if (alarm.isChecked()){
+            tipe = "Alarm";
+        }else {
+            tipe = "Notifikasi";
+        }
+    }
 
     private void dateTimePicker(){
         dateTimeDialogFragment = (SwitchDateTimeDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DATETIME);
@@ -83,6 +175,5 @@ public class AddJadwalActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }
