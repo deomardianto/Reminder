@@ -72,7 +72,7 @@ public class UpdateAgenda extends AppCompatActivity {
         tx_time = findViewById(R.id.mulai_agenda);
         btn_time = findViewById(R.id.btn_mulai_agenda);
         final Spinner ulangi = findViewById(R.id.spin_agenda);
-        btn_simpan = findViewById(R.id.btnsimpan_agenda);
+        btn_simpan = findViewById(R.id.btnupdate_agenda);
 
         radioGroup = findViewById(R.id.radiogrup_agenda);
         alarm = findViewById(R.id.alarm_agenda);
@@ -92,7 +92,7 @@ public class UpdateAgenda extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        String timeStamp = intent.getStringExtra("timeStamp");
+        final String timeStamp = intent.getStringExtra("timeStamp");
 
         Query query =reference.orderByChild("timeStamp").equalTo(timeStamp);
         query.addValueEventListener(new ValueEventListener() {
@@ -110,9 +110,9 @@ public class UpdateAgenda extends AppCompatActivity {
                     tx_time.setText(waktu);
                     ulangi.setPrompt(kulangi);
                     if (tipe.equals("Alarm")){
-                        alarm.isChecked();
+                        alarm.setChecked(true);
                     }else {
-                        notif.isChecked();
+                        notif.setChecked(true);
                     }
 
                 }
@@ -152,7 +152,6 @@ public class UpdateAgenda extends AppCompatActivity {
                 String judul = nama_agenda.getText().toString().trim();
                 String waktu = tx_time.getText().toString().trim();
                 String Ulangi =ulangi.getSelectedItem().toString();
-                String timeStamp = String.valueOf(System.currentTimeMillis());
 
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("email",personEmail);
@@ -160,6 +159,7 @@ public class UpdateAgenda extends AppCompatActivity {
                 hashMap.put("waktu", waktu);
                 hashMap.put("tipe", tipe);
                 hashMap.put("ulangi",Ulangi);
+                hashMap.put("timeStamp",timeStamp);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = database.getReference("Agenda");

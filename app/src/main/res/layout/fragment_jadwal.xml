@@ -69,9 +69,7 @@
                         android:layout_height="match_parent"
                         android:layout_below="@id/tx_agenda"
                         tools:listitem="@layout/agenda_item"
-                        android:layout_marginTop="-20dp"
-                        android:layout_marginBottom="20dp"
-                        android:paddingBottom="30dp"/>
+                        android:layout_marginTop="-20dp"/>
 
                 </RelativeLayout>
             </ScrollView>
