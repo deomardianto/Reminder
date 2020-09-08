@@ -3,11 +3,8 @@ package com.project.gemastik.reminder.jadwal;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +19,10 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,16 +35,14 @@ import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.project.gemastik.reminder.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class AddJadwalActivity extends AppCompatActivity {
+public class UpdateAgenda extends AppCompatActivity {
 
     EditText nama_agenda;
     ImageButton btn_time;
@@ -53,12 +51,10 @@ public class AddJadwalActivity extends AppCompatActivity {
     String tipe, personEmail;
     SwitchDateTimeDialogFragment dateTimeDialogFragment;
 
-    List<dataAgenda> list;
-    adapterAgenda adapter;
-
     private FirebaseAuth mAuth;
     FirebaseUser mUser;
     private DatabaseReference reference;
+    FirebaseDatabase database;
     GoogleSignInClient mGoogleSignInClient;
 
     RadioGroup radioGroup;
@@ -66,10 +62,11 @@ public class AddJadwalActivity extends AppCompatActivity {
 
     private static final String TAG_DATETIME = "TAG_DATETIME";
     private static final String TAG = "DateTimePicker";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_jadwal);
+        setContentView(R.layout.activity_update_agenda);
 
         nama_agenda = findViewById(R.id.judul_agenda);
         tx_time = findViewById(R.id.mulai_agenda);
@@ -83,6 +80,51 @@ public class AddJadwalActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("Agenda");
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UpdateAgenda.this);
+        if (acct != null) {
+            personEmail = acct.getEmail();
+
+        }else {
+            personEmail = mUser.getEmail();
+        }
+
+        Intent intent = getIntent();
+        String timeStamp = intent.getStringExtra("timeStamp");
+
+        Query query =reference.orderByChild("timeStamp").equalTo(timeStamp);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+
+                    String judul = "" + ds.child("judul").getValue();
+                    String email = "" + ds.child("email").getValue();
+                    String waktu = "" + ds.child("waktu").getValue();
+                    String tipe = "" + ds.child("tipe").getValue();
+                    String kulangi = "" + ds.child("ulangi").getValue();
+
+                    nama_agenda.setText(judul);
+                    tx_time.setText(waktu);
+                    ulangi.setPrompt(kulangi);
+                    if (tipe.equals("Alarm")){
+                        alarm.isChecked();
+                    }else {
+                        notif.isChecked();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         dateTimePicker();
 
@@ -97,7 +139,7 @@ public class AddJadwalActivity extends AppCompatActivity {
         btn_simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AddJadwalActivity.this);
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UpdateAgenda.this);
                 if (acct != null) {
                     personEmail = acct.getEmail();
 
@@ -112,24 +154,33 @@ public class AddJadwalActivity extends AppCompatActivity {
                 String Ulangi =ulangi.getSelectedItem().toString();
                 String timeStamp = String.valueOf(System.currentTimeMillis());
 
-                HashMap<Object, String> hashMap = new HashMap<>();
+                HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("email",personEmail);
                 hashMap.put("judul", judul);
                 hashMap.put("waktu", waktu);
                 hashMap.put("tipe", tipe);
                 hashMap.put("ulangi",Ulangi);
-                hashMap.put("timeStamp",timeStamp);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = database.getReference("Agenda");
 
-                databaseReference.child(timeStamp).setValue(hashMap);
-                Toast.makeText(AddJadwalActivity.this, "Agenda Berhasil Disimpan", Toast.LENGTH_LONG).show();
-                finish();
+                databaseReference.child(timeStamp).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(UpdateAgenda.this, "Agenda Berhasil Diupdate", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UpdateAgenda.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
 
             }
         });
-  }
+    }
 
     private void tipePengingat() {
         if (alarm.isChecked()){
@@ -175,5 +226,4 @@ public class AddJadwalActivity extends AppCompatActivity {
             }
         });
     }
-
 }

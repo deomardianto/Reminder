@@ -50,8 +50,8 @@ public class adapterAgenda extends RecyclerView.Adapter<adapterAgenda.Myholder> 
     @Override
     public void onBindViewHolder(@NonNull final Myholder holder, int position) {
 
-        String judul = agendas.get(position).getJudul();
-        String waktu = agendas.get(position).getWaktu();
+        final String judul = agendas.get(position).getJudul();
+        final String waktu = agendas.get(position).getWaktu();
         final String timeStamp = agendas.get(position).getTimeStamp();
 
         holder.mJudul.setText(judul);
@@ -70,26 +70,15 @@ public class adapterAgenda extends RecyclerView.Adapter<adapterAgenda.Myholder> 
                         if (which == 1) {
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference reference = database.getReference().child("Order");
-                            Query query = reference.orderByChild("timeStamp").equalTo(timeStamp);
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot appleSnapshot: snapshot.getChildren()) {
-                                        appleSnapshot.getRef().removeValue();
-                                    }
-                                }
+                            DatabaseReference reference = database.getReference().child("Agenda");
+                            reference.child(timeStamp).removeValue();
+                            Toast.makeText(context, "Agenda Berhasil Dihapus", Toast.LENGTH_LONG).show();
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
 
                         }else if (which == 0){
-
-
-
+                            Intent intent = new Intent(context,UpdateAgenda.class);
+                            intent.putExtra("timeStamp",timeStamp);
+                            context.startActivity(intent);
                         }
                     }
                 });

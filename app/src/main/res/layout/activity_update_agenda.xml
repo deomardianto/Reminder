@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".jadwal.AddJadwalActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/judul_agenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/judul"
+            android:inputType="text"
+            android:background="@drawable/rectangle_edittext"
+            android:padding="8dp"
+            style="@style/MarginFormEdittext"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_regular"/>
+
+
+        <ImageButton
+            android:id="@+id/btn_mulai_agenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_today"
+            android:layout_below="@id/judul_agenda"
+            style="@style/MarginForm"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:id="@+id/mulai_agenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mulai_agenda"
+            android:textSize="16sp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@id/btn_mulai_agenda"
+            android:layout_below="@id/judul_agenda"
+            android:textColor="#000000"
+            android:fontFamily="@font/poppins_regular" />
+
+        <TextView
+            android:id="@+id/tx_pengingat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tipe_pengingat"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_below="@id/btn_mulai_agenda"
+            style="@style/MarginFormEdittext"/>
+        <RadioGroup
+            android:id="@+id/radiogrup_agenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tx_pengingat"
+            android:layout_marginStart="20dp">
+            <RadioButton
+                android:id="@+id/alarm_agenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alarm"
+                android:textSize="15sp"
+                android:checked="true"
+                android:fontFamily="@font/poppins_regular" />
+            <RadioButton
+                android:id="@+id/notif_agenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notifikasi"
+                android:layout_marginStart="20dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppins_regular" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tx_ulangi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ulangi_pengingat"
+            android:textSize="16sp"
+            android:layout_below="@id/radiogrup_agenda"
+            android:textColor="#000000"
+            android:fontFamily="@font/poppins_regular"
+            style="@style/MarginFormEdittext"/>
+
+        <Spinner
+            android:id="@+id/spin_agenda"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_below="@id/tx_ulangi"
+            android:entries="@array/kat_pengingat"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnupdate_agenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MarginFormEdittext"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/spin_agenda"
+            app:cardElevation="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:padding="8dp"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/poppins_medium"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</ScrollView>
